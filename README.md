@@ -19,10 +19,11 @@ Listing any source turns off the implicit CocoaPods source, so keep the CDN line
 After you change the Mindbox version (or update the React Native or Flutter plugin), run:
 
 ```sh
-pod update Mindbox MindboxNotifications MindboxLogger
+pod update Mindbox MindboxNotifications
 ```
 
-A plain `pod install` keeps the versions locked in `Podfile.lock` and reports a version conflict.
+Leave out `MindboxNotifications` if no target uses it: `pod update` stops on a pod that is not installed. A plain
+`pod install` keeps the versions locked in `Podfile.lock`, and after a plugin update it stops on a version conflict.
 
 The same two lines cover:
 
