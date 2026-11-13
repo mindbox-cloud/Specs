@@ -34,6 +34,28 @@ The same two lines cover:
 
 Swift Package Manager users add https://github.com/mindbox-cloud/ios-sdk directly and do not need this repository.
 
+## Troubleshooting
+
+Some versions are published both here and on trunk. For them CocoaPods prints `Found multiple specifications`; the
+copies are identical and the warning does not affect the install.
+
+`CocoaPods could not find compatible versions for pod "Mindbox"` (or `"MindboxNotifications"`) ends with one of these
+lines:
+
+```text
+None of your spec sources contain a spec satisfying the dependency: `Mindbox (= X.Y.Z)`.
+Specs satisfying the `Mindbox, Mindbox (= X.Y.Z)` dependency were found, but they required a higher minimum deployment target.
+```
+
+CocoaPods did not find that Mindbox version: the `Podfile` lacks this repository, the local copy of it is out of date,
+or `Podfile.lock` pins an older version. The second line mentions the deployment target but appears in these cases
+too.
+
+Check that both `source` lines are at the top of the `Podfile`, then run
+`pod update Mindbox MindboxNotifications` (without `MindboxNotifications` if no target uses it). It updates the
+local copies of the sources and the versions in `Podfile.lock`. If the error stays, check that the app's deployment
+target is not below the one Mindbox requires.
+
 ## Questions
 
 Open an issue in [mindbox-cloud/ios-sdk](https://github.com/mindbox-cloud/ios-sdk/issues).
